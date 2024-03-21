@@ -1,5 +1,6 @@
 // fetch data from api...using async await function
 const loadData = async (isClicked) => {
+   
     const URL = `https://openapi.programming-hero.com/api/ai/tools`
     const response = await fetch(URL);
     const data = await response.json();
@@ -17,6 +18,7 @@ const displayAi = (aiHubs,isClicked) => {
     const cardContainers = document.getElementById('cardContainers');
 
     const btnSeeMore = document.getElementById('btnSeeMore');
+    // condition apply for 'seeMOre btn' toggle(on/off)
     if (aiHubs.length > 6 && !isClicked) {
         btnSeeMore.classList.remove('hidden')
         aiHubs=aiHubs.slice(0,6)
@@ -24,7 +26,7 @@ const displayAi = (aiHubs,isClicked) => {
     else if(isClicked){
         btnSeeMore.classList.add('hidden')
     }
-    
+    loadingSpinner(true)
     aiHubs.forEach(aiHub => {
         // create new div
         const card = document.createElement('div')
@@ -59,8 +61,23 @@ const displayAi = (aiHubs,isClicked) => {
         cardContainers.appendChild(card);
 
     });
+    loadingSpinner(false);
 }
-
+// onclick handler on see more btn
 const showAllContents = () =>{
     loadData(true)
+    // loadingSpinner(true);
+}
+
+const loadingSpinner =(isLoading) =>{
+
+    const loadingSpinner= document.getElementById('loadingSpinner');
+
+    if(isLoading){
+        loadingSpinner.classList.remove('hidden');
+    }
+    else if(!isLoading){
+        loadingSpinner.classList.add('hidden');
+    }
+
 }
